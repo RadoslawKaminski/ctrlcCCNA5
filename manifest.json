@@ -1,0 +1,12 @@
+{
+    "name": "ctrlc CCNA",
+	"description": "kopiuje Czary Czary Na Antarktydzie za ciebie",
+    "version": "0.2018.5.23",
+	"manifest_version": 2,
+    "content_scripts": [
+        {
+            "matches": ["*://*/*"],
+            "js": ["jquery-3.3.1.js", "main.js"]
+        }
+    ]
+}
