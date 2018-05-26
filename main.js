@@ -17,7 +17,7 @@ function skopiuj()
 		isFlash = false;
 	$("body").prepend("<div id='odpowiedzi' style='position:relative; background-color: white; border-bottom: 10px solid black'></div>")
 	$("body").prepend("<div id='pytania' style='position:relative; background-color: white; border-bottom: 10px solid black'></div>")
-	/*$('.post-content>p').each(function(i) 
+	$('.post-content>p').each(function(i) 
 	{
 		fake++;
 		$(this).find('strong').each(function(j)
@@ -66,7 +66,7 @@ function skopiuj()
 			});
 		}
 		isImg = isPT = isBlank = isFlash = false;
-	});*/
+	});
 	$(".post-content>p").each(function(i) 
 	{
 		fakeA++;
