@@ -10,6 +10,7 @@ function skopiuj()
 		odpowiedz,
 		fake=0,
 		fakeA=0,
+		indexA,
 		isImg = false,
 		isPT = false,
 		isBlank = false,
@@ -73,22 +74,22 @@ function skopiuj()
 		{
 			fakeA--;
 			indexA = i-fakeA+1;
-			console.log(indexA+": ");
-			/*if(i>0)
+			//console.log(indexA+": ");
+			if(indexA>1)
 				$('#odpowiedzi').append(",<br>");
-			$('#odpowiedzi').append("//question "+indexA+"<br>[<br>");*/
+			$('#odpowiedzi').append("//question "+indexA+"<br>[<br>");
+			
 			$(this).find("span").each(function(j) 
 			{
 				odpowiedz = $(this).text().replace(/\*/g, '');
 				if(odpowiedz.indexOf('#') >-1)
 					odpowiedz = odpowiedz.slice(odpowiedz.indexOf('#')+2);
-				console.log(j+": "+odpowiedz);
-				/*if(j == 0)
-					$('#odpowiedzi').append("\""+odpowiedz+"\"");
-				else
-					$('#odpowiedzi').append(",<br>\""+odpowiedz+"\"");*/
+				//console.log(j+": "+odpowiedz);
+				if(j > 0)
+					$('#odpowiedzi').append(",<br>");
+				$('#odpowiedzi').append("\""+odpowiedz+"\"");
 			});
-			//$('#odpowiedzi').append("<br>]");
+			$('#odpowiedzi').append("<br>]");
 		}
 	});
 }
