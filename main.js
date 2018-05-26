@@ -9,13 +9,14 @@ function skopiuj()
 	var pytanie,
 		odpowiedz,
 		fake=0,
+		fakeA=0,
 		isImg = false,
 		isPT = false,
 		isBlank = false,
 		isFlash = false;
-	//$("body").prepend("<div id='odpowiedzi' style='position:relative; background-color: white; border-bottom: 10px solid black'></div>")
+	$("body").prepend("<div id='odpowiedzi' style='position:relative; background-color: white; border-bottom: 10px solid black'></div>")
 	$("body").prepend("<div id='pytania' style='position:relative; background-color: white; border-bottom: 10px solid black'></div>")
-	$('.post-content>p').each(function(i) 
+	/*$('.post-content>p').each(function(i) 
 	{
 		fake++;
 		$(this).find('strong').each(function(j)
@@ -64,23 +65,32 @@ function skopiuj()
 			});
 		}
 		isImg = isPT = isBlank = isFlash = false;
-	});
-	/*$(".post-content>ul").each(function(i) 
-	{
-		if(i==0)
-			$('#odpowiedzi').append("[<br>");
-		else
-			$('#odpowiedzi').append(",<br>[<br>");
-		$(this).find("li > span").each(function(j) 
-		{
-			odpowiedz = $(this).text();
-			if(j == 0)
-				$('#odpowiedzi').append("\""+odpowiedz+"\"");
-			else
-				$('#odpowiedzi').append(",<br>\""+odpowiedz+"\"");
-		});
-		$('#odpowiedzi').append("<br>]");
 	});*/
+	$(".post-content>p").each(function(i) 
+	{
+		fakeA++;
+		if($(this).has("span").length)
+		{
+			fakeA--;
+			indexA = i-fakeA+1;
+			console.log(indexA+": ");
+			/*if(i>0)
+				$('#odpowiedzi').append(",<br>");
+			$('#odpowiedzi').append("//question "+indexA+"<br>[<br>");*/
+			$(this).find("span").each(function(j) 
+			{
+				odpowiedz = $(this).text().replace(/\*/g, '');
+				if(odpowiedz.indexOf('#') >-1)
+					odpowiedz = odpowiedz.slice(odpowiedz.indexOf('#')+2);
+				console.log(j+": "+odpowiedz);
+				/*if(j == 0)
+					$('#odpowiedzi').append("\""+odpowiedz+"\"");
+				else
+					$('#odpowiedzi').append(",<br>\""+odpowiedz+"\"");*/
+			});
+			//$('#odpowiedzi').append("<br>]");
+		}
+	});
 }
 document.onkeydown = function(e)
 {
