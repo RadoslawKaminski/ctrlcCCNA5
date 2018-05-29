@@ -29,17 +29,19 @@ function skopiuj()
 				isImg = true;
 			if(pytanie.includes('options are used'))
 				isFlash = true;
+			if(pytanie.includes('Fill in the blank.'))
+				isBlank = true;
 		});
 		if(isFlash)
 		{
 			fake--;
-			//console.log(i-fake+1+': ///////////////////flash///////////////////')
+			console.log(i-fake+1+': ///////////////////flash///////////////////')
 			wklej(i-fake+1, '///////////////////flash///////////////////');
 		}
 		else if(isBlank)
 		{
 			fake--;
-			//console.log(i-fake+1+': ///////////////////blank///////////////////')
+			console.log(i-fake+1+': ///////////////////blank///////////////////')
 			wklej(i-fake+1, '///////////////////blank///////////////////');
 		}
 		else
@@ -51,16 +53,22 @@ function skopiuj()
 				{
 					if((j == 1 && !isImg && !isPT) || (j == 0 && isImg) || (j == 2 && isPT))
 					{
+						if(pytanie.indexOf(' ') == 0)
+							pytanie = pytanie.slice(pytanie.indexOf(' ')+1); //jeżeli spacja jest pierwsza to ją usuwa
+							
 						fake--;
-						//console.log(i-fake+1+": "+pytanie);
+						console.log(i-fake+1+": "+pytanie);
 						wklej(i-fake+1, pytanie)
 					}
 					else if(pytanie.indexOf('.') < 4 && pytanie.indexOf('.') >-1)
 					{
 						pytanie = pytanie.slice(pytanie.indexOf('.')+2); //szuka kropki i zostawia tekst od kropki +2 pola, czyli od początku pytania
-						fake--;
-						//console.log(i-fake+1+": "+pytanie);
-						wklej(i-fake+1, pytanie)
+						if(pytanie != "")
+						{
+							fake--;
+							console.log(i-fake+1+": "+pytanie);
+							wklej(i-fake+1, pytanie)
+						}
 					}
 				}
 			});
@@ -74,7 +82,7 @@ function skopiuj()
 		{
 			fakeA--;
 			indexA = i-fakeA+1;
-			//console.log(indexA+": ");
+			console.log(indexA+": ");
 			if(indexA>1)
 				$('#odpowiedzi').append(",<br>");
 			$('#odpowiedzi').append("//question "+indexA+"<br>[<br>");
@@ -84,7 +92,7 @@ function skopiuj()
 				odpowiedz = $(this).text().replace(/\*/g, '');
 				if(odpowiedz.indexOf('#') >-1)
 					odpowiedz = odpowiedz.slice(odpowiedz.indexOf('#')+2);
-				//console.log(j+": "+odpowiedz);
+				console.log(j+": "+odpowiedz);
 				if(j > 0)
 					$('#odpowiedzi').append(",<br>");
 				$('#odpowiedzi').append("\""+odpowiedz+"\"");
