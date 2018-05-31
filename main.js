@@ -12,22 +12,29 @@ function skopiuj()
 		fakeA=0,
 		indexA,
 		isImg = false,
+		isWeirdImg = false,
 		isPT = false,
 		isBlank = false,
 		isFlash = false,
-		haveq = false;
+		haveq = false
 	//$("body").prepend("<div id='odpowiedzi' style='position:relative; background-color: white; border-bottom: 10px solid black'></div>")
 	//$("body").prepend("<div id='pytania' style='position:relative; background-color: white; border-bottom: 10px solid black'></div>")
 	$('.post-content>p').each(function(i) 
 	{
 		fake++;
-		$(this).find('strong').each(function(j)
+		var p = $(this);
+		p.find('strong').each(function(j)
 		{
 			pytanie = $(this).text();
 			if(pytanie.includes('Open the PT'))
 				isPT = true;
 			if(pytanie.includes('Refer to the exhibit'))
-				isImg = true;
+			{
+				if(pytanie.slice(pytanie.indexOf('Refer to the exhibit')+22).length > 1)
+					isImg = true;
+				else 
+					isWeirdImg = true;
+			}
 			if(pytanie.includes('options are used'))
 				isFlash = true;
 			if(pytanie.includes('Fill in the blank'))
@@ -49,7 +56,12 @@ function skopiuj()
 		}
 		else
 		{
-			$(this).find('strong').each(function(j)
+			if(isWeirdImg)
+			{
+				p = $("~ :eq(1)", this);
+				isImg = true;
+			}
+			pfind('strong').each(function(j)
 			{
 				pytanie = $(this).text();
 				if(!$(this).parent('span').length && !$(this).has('span').length && !pytanie.includes('not scored'))
@@ -76,12 +88,12 @@ function skopiuj()
 				}
 			});
 		}
-		isImg = isPT = isBlank = isFlash = haveq = false;
+		isImg = isWeirdImg = isPT = isBlank = isFlash = haveq = false;
 	});
 	$(".post-content>p").each(function(i) 
 	{
 		fakeA++;
-		if($(this).has("span").length)
+		if($(this).has("span[style='color: #3366ff;']").length)
 		{
 			fakeA--;
 			indexA = i-fakeA+1;
