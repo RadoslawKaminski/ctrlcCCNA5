@@ -14,9 +14,10 @@ function skopiuj()
 		isImg = false,
 		isPT = false,
 		isBlank = false,
-		isFlash = false;
-	$("body").prepend("<div id='odpowiedzi' style='position:relative; background-color: white; border-bottom: 10px solid black'></div>")
-	$("body").prepend("<div id='pytania' style='position:relative; background-color: white; border-bottom: 10px solid black'></div>")
+		isFlash = false,
+		haveq = false;
+	//$("body").prepend("<div id='odpowiedzi' style='position:relative; background-color: white; border-bottom: 10px solid black'></div>")
+	//$("body").prepend("<div id='pytania' style='position:relative; background-color: white; border-bottom: 10px solid black'></div>")
 	$('.post-content>p').each(function(i) 
 	{
 		fake++;
@@ -29,8 +30,10 @@ function skopiuj()
 				isImg = true;
 			if(pytanie.includes('options are used'))
 				isFlash = true;
-			if(pytanie.includes('Fill in the blank.'))
+			if(pytanie.includes('Fill in the blank'))
 				isBlank = true;
+			if($(this).parent('span').length || $(this).has('span').length)
+				haveq = true;
 		});
 		if(isFlash)
 		{
@@ -51,7 +54,7 @@ function skopiuj()
 				pytanie = $(this).text();
 				if(!$(this).parent('span').length && !$(this).has('span').length && !pytanie.includes('not scored'))
 				{
-					if((j == 1 && !isImg && !isPT) || (j == 0 && isImg) || (j == 2 && isPT))
+					if( ( (j == 1 && !isImg && !isPT) || (j == 0 && isImg) || (j == 2 && isPT) ||  (haveq && j == 2) ) && pytanie.length > 2)
 					{
 						if(pytanie.indexOf(' ') == 0)
 							pytanie = pytanie.slice(pytanie.indexOf(' ')+1); //jeżeli spacja jest pierwsza to ją usuwa
@@ -73,7 +76,7 @@ function skopiuj()
 				}
 			});
 		}
-		isImg = isPT = isBlank = isFlash = false;
+		isImg = isPT = isBlank = isFlash = haveq = false;
 	});
 	$(".post-content>p").each(function(i) 
 	{
