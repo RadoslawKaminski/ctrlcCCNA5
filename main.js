@@ -12,35 +12,31 @@ function skopiuj()
 		fakeA=0,
 		indexA,
 		isImg = false,
-		isWeirdImg = false,
 		isPT = false,
 		isBlank = false,
 		isFlash = false,
-		haveq = false
+		is1 = false,
+		is5 = false;
 	$("body").prepend("<div id='odpowiedzi' style='position:relative; background-color: white; border-bottom: 10px solid black'></div>")
 	$("body").prepend("<div id='pytania' style='position:relative; background-color: white; border-bottom: 10px solid black'></div>")
 	$('.post-content>p').each(function(i) 
 	{
 		fake++;
-		var p = $(this);
-		p.find('strong').each(function(j)
+		$(this).find('strong').each(function(j)
 		{
 			pytanie = $(this).text();
 			if(pytanie.includes('Open the PT'))
 				isPT = true;
 			if(pytanie.includes('Refer to the exhibit'))
-			{
-				if(pytanie.slice(pytanie.indexOf('Refer to the exhibit')+22).length > 1)
-					isImg = true;
-				else 
-					isWeirdImg = true;
-			}
+				isImg = true;
 			if(pytanie.includes('options are used'))
 				isFlash = true;
-			if(pytanie.includes('Fill in the blank'))
+			if(pytanie.includes('Fill in the blank.'))
 				isBlank = true;
-			if($(this).parent('span').length || $(this).has('span').length)
-				haveq = true;
+			if(pytanie == '1')
+				is1 = true;
+			if(pytanie == '5')
+				is5 = true;
 		});
 		if(isFlash)
 		{
@@ -54,19 +50,26 @@ function skopiuj()
 			console.log(i-fake+1+': ///////////////////blank///////////////////')
 			wklej(i-fake+1, '///////////////////blank///////////////////');
 		}
+		else if(is1)
+		{
+			fake--;
+			console.log(i-fake+1+': Which two actions should a technician take if illegal content, such as child pornography, is discovered on the hard drive of a customer computer? (Choose two.)')
+			wklej(i-fake+1, 'Which two actions should a technician take if illegal content, such as child pornography, is discovered on the hard drive of a customer computer? (Choose two.)');
+		}
+		else if(is5)
+		{
+			fake--;
+			console.log(i-fake+1+': Refer to the exhibit. During the troubleshooting of software that is installed on a computer system, a level one technician requires help from a level two technician. The file shown in the exhibit must be sent to the level two technician. How should the level one technician deliver this file?')
+			wklej(i-fake+1, 'Refer to the exhibit. During the troubleshooting of software that is installed on a computer system, a level one technician requires help from a level two technician. The file shown in the exhibit must be sent to the level two technician. How should the level one technician deliver this file?');
+		}
 		else
 		{
-			if(isWeirdImg)
-			{
-				p = $("~ :eq(1)", this);
-				isImg = true;
-			}
-			p.find('strong').each(function(j)
+			$(this).find('strong').each(function(j)
 			{
 				pytanie = $(this).text();
 				if(!$(this).parent('span').length && !$(this).has('span').length && !pytanie.includes('not scored'))
 				{
-					if( ( (j == 1 && !isImg && !isPT) || (j == 0 && isImg) || (j == 2 && isPT) ||  (haveq && j == 2) ) && pytanie.length > 2)
+					if((j == 1 && !isImg && !isPT) || (j == 0 && isImg) || (j == 2 && isPT))
 					{
 						if(pytanie.indexOf(' ') == 0)
 							pytanie = pytanie.slice(pytanie.indexOf(' ')+1); //jeżeli spacja jest pierwsza to ją usuwa
@@ -88,12 +91,12 @@ function skopiuj()
 				}
 			});
 		}
-		isImg = isWeirdImg = isPT = isBlank = isFlash = haveq = false;
+		isImg = isPT = isBlank = isFlash = is1 = is5 = false;
 	});
 	$(".post-content>p").each(function(i) 
 	{
 		fakeA++;
-		if($(this).has("span[style='color: #3366ff;']").length)
+		if($(this).has("span").length)
 		{
 			fakeA--;
 			indexA = i-fakeA+1;
