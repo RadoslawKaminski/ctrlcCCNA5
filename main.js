@@ -20,9 +20,9 @@ function skopiuj()
 		is8 = false,
 		is24 = false,
 		is25 = false;
-	//$("body").prepend("<div id='odpowiedzi' style='position:relative; background-color: white; border-bottom: 10px solid black'></div>")
-	//$("body").prepend("<div id='pytania' style='position:relative; background-color: white; border-bottom: 10px solid black'></div>")
-	/*$('.post-content>p').each(function(i) 
+	$("body").prepend("<div id='odpowiedzi' style='position:relative; background-color: white; border-bottom: 10px solid black'></div>")
+	$("body").prepend("<div id='pytania' style='position:relative; background-color: white; border-bottom: 10px solid black'></div>")
+	$('.post-content>p').each(function(i) 
 	{
 		fake++;
 		var p = $(this);
@@ -110,11 +110,11 @@ function skopiuj()
 			});
 		}
 		isImg = isWeirdImg = isPT = isBlank = isFlash = haveq = is8 = is24 = is25 = false;
-	});*/
+	});
 	$(".post-content>p").each(function(i) 
 	{
 		fakeA++;
-		if($(this).has("span").length)
+		if($(this).has("span[style='color: #3366ff;']").length)
 		{
 			fakeA--;
 			indexA = i-fakeA+1;
@@ -128,7 +128,9 @@ function skopiuj()
 				odpowiedz = $(this).text().replace(/\*/g, '');
 				if(odpowiedz.indexOf('#') >-1)
 					odpowiedz = odpowiedz.slice(odpowiedz.indexOf('#')+2);
-				console.log(j+": "+odpowiedz);
+				if(odpowiedz == "dynamic auto" || odpowiedz == "nonegotiate" || odpowiedz == "dynamic desirable" || odpowiedz == "when connecting a Cisco switch to a non-Cisco switch" || odpowiedz == "improved IT staff efficiency")
+					fakeA++;
+				console.log(indexA+": "+odpowiedz);
 				if(j > 0)
 					$('#odpowiedzi').append(",<br>");
 				$('#odpowiedzi').append("\""+odpowiedz+"\"");
