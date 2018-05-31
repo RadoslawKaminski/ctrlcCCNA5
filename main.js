@@ -12,28 +12,44 @@ function skopiuj()
 		fakeA=0,
 		indexA,
 		isImg = false,
+		isWeirdImg = false,
 		isPT = false,
 		isBlank = false,
 		isFlash = false,
-		haveq = false;
+		haveq = false,
+		is8 = false,
+		is24 = false,
+		is25 = false;
 	//$("body").prepend("<div id='odpowiedzi' style='position:relative; background-color: white; border-bottom: 10px solid black'></div>")
 	//$("body").prepend("<div id='pytania' style='position:relative; background-color: white; border-bottom: 10px solid black'></div>")
-	$('.post-content>p').each(function(i) 
+	/*$('.post-content>p').each(function(i) 
 	{
 		fake++;
-		$(this).find('strong').each(function(j)
+		var p = $(this);
+		p.find('strong').each(function(j)
 		{
 			pytanie = $(this).text();
 			if(pytanie.includes('Open the PT'))
 				isPT = true;
 			if(pytanie.includes('Refer to the exhibit'))
-				isImg = true;
+			{
+				if(pytanie.slice(pytanie.indexOf('Refer to the exhibit')+22).length > 1)
+					isImg = true;
+				else 
+					isWeirdImg = true;
+			}
 			if(pytanie.includes('options are used'))
 				isFlash = true;
 			if(pytanie.includes('Fill in the blank'))
 				isBlank = true;
 			if($(this).parent('span').length || $(this).has('span').length)
 				haveq = true;
+			if(pytanie == "8")
+				is8 = true;
+			if(pytanie == "24 ")
+				is24 = true;
+			if(pytanie.includes('25 Which combination of DTP'))
+				is25 = true;
 		});
 		if(isFlash)
 		{
@@ -47,14 +63,31 @@ function skopiuj()
 			console.log(i-fake+1+': ///////////////////blank///////////////////')
 			wklej(i-fake+1, '///////////////////blank///////////////////');
 		}
+		else if(is8)
+		{
+			fake--;
+			console.log(i-fake+1+': ///////////////////flash///////////////////')
+			wklej(i-fake+1, '///////////////////flash///////////////////');
+		}
+		else if(is25)
+		{
+			fake--;
+			console.log(i-fake+1+': Which combination of DTP modes set on adjacent Cisco switches will cause the link to become an access link instead of a trunk link?')
+			wklej(i-fake+1, 'Which combination of DTP modes set on adjacent Cisco switches will cause the link to become an access link instead of a trunk link?');
+		}
 		else
 		{
-			$(this).find('strong').each(function(j)
+			if(isWeirdImg)
+			{
+				p = $("~ :eq(1)", this);
+				isImg = true;
+			}
+			p.find('strong').each(function(j)
 			{
 				pytanie = $(this).text();
 				if(!$(this).parent('span').length && !$(this).has('span').length && !pytanie.includes('not scored'))
 				{
-					if( ( (j == 1 && !isImg && !isPT) || (j == 0 && isImg) || (j == 2 && isPT) ||  (haveq && j == 2) ) && pytanie.length > 2)
+					if( ( (j == 1 && !isImg && !isPT) || (j == 0 && isImg) || (j == 2 && isPT) ||  (haveq && j == 2) || (haveq && j == 4 && is24)) && pytanie.length > 2)
 					{
 						if(pytanie.indexOf(' ') == 0)
 							pytanie = pytanie.slice(pytanie.indexOf(' ')+1); //jeżeli spacja jest pierwsza to ją usuwa
@@ -76,8 +109,8 @@ function skopiuj()
 				}
 			});
 		}
-		isImg = isPT = isBlank = isFlash = haveq = false;
-	});
+		isImg = isWeirdImg = isPT = isBlank = isFlash = haveq = is8 = is24 = is25 = false;
+	});*/
 	$(".post-content>p").each(function(i) 
 	{
 		fakeA++;
