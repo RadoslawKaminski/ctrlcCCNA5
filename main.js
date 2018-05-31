@@ -17,8 +17,8 @@ function skopiuj()
 		isBlank = false,
 		isFlash = false,
 		haveq = false
-	//$("body").prepend("<div id='odpowiedzi' style='position:relative; background-color: white; border-bottom: 10px solid black'></div>")
-	//$("body").prepend("<div id='pytania' style='position:relative; background-color: white; border-bottom: 10px solid black'></div>")
+	$("body").prepend("<div id='odpowiedzi' style='position:relative; background-color: white; border-bottom: 10px solid black'></div>")
+	$("body").prepend("<div id='pytania' style='position:relative; background-color: white; border-bottom: 10px solid black'></div>")
 	$('.post-content>p').each(function(i) 
 	{
 		fake++;
@@ -61,7 +61,7 @@ function skopiuj()
 				p = $("~ :eq(1)", this);
 				isImg = true;
 			}
-			pfind('strong').each(function(j)
+			p.find('strong').each(function(j)
 			{
 				pytanie = $(this).text();
 				if(!$(this).parent('span').length && !$(this).has('span').length && !pytanie.includes('not scored'))
