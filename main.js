@@ -28,9 +28,9 @@ function skopiuj()
 			pytanie = $(this).text();
 			if(pytanie.includes('Open the PT'))
 				isPT = true;
-			if(pytanie.includes('Refer to the exhibit'))
+			if(pytanie.includes('Refer to the exhibit') || pytanie.includes('Refer to the graphic'))
 			{
-				if(pytanie.slice(pytanie.indexOf('Refer to the exhibit')+22).length > 1)
+				if(pytanie.slice(pytanie.indexOf('Refer to the exhibit')+22).length > 1 || pytanie.slice(pytanie.indexOf('Refer to the graphic')+22).length > 1)
 					isImg = true;
 				else 
 					isWeirdImg = true;
@@ -58,7 +58,7 @@ function skopiuj()
 		{
 			if(isWeirdImg)
 			{
-				p = $("~ :eq(1)", this);
+				p = $("~ :eq(1)", this);//bierze paragraf dwa elementy dalej (czyli pod obrazkiem)
 				isImg = true;
 			}
 			p.find('strong').each(function(j)
@@ -75,10 +75,10 @@ function skopiuj()
 						console.log(i-fake+1+": "+pytanie);
 						wklej(i-fake+1, pytanie)
 					}
-					else if(pytanie.indexOf('.') < 4 && pytanie.indexOf('.') >-1)
+					else if(pytanie.indexOf('.') < 4 && pytanie.includes('.'))
 					{
 						pytanie = pytanie.slice(pytanie.indexOf('.')+2); //szuka kropki i zostawia tekst od kropki +2 pola, czyli od początku pytania
-						if(pytanie != "")
+						if(pytanie != "" && !(pytanie.indexOf('.') < 4 && pytanie.includes('.'))) //czy nie ma znowu kropki przy początku (to może być adres ip)
 						{
 							fake--;
 							console.log(i-fake+1+": "+pytanie);
